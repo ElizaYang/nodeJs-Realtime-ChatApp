@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--client side-->
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,6 +9,20 @@
 <body>
     <h2>Now you have a online host from Heroku</h2>
     <p>Welcome to the chat app. My code now can reached by public</p>
+<!--    load io javascript library-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+//        call io to ask server open up a web socket to accept connection and keep it open
+        var socket = io();
+//        socket event listener: socket.on
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+        socket.on('disconnect', () => {
+            console.log('Disonnected to server');
+        });
+        
+    </script>
 </body>
     
 </html>
