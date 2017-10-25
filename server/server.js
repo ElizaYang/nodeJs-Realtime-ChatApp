@@ -19,13 +19,27 @@ io.on('connection', (socket) => {
     
     //!!create custom event socket to emit  from server side to client(firstArg:name of event, secArg: data(obj))
     socket.emit('newMessage', {
-        from:'server',
-        text:'here is emit from server'
+        from:'Chat App Admin',
+        text:'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+    //broadcast to everybody but myself
+    socket.broadcast.emit('newMessage', {
+         from: 'Chat App Admin',
+         text: 'New user just joined',
+         createdAt: new Date().getTime()
     });
     
     //!create custon event for server to listen
-    socket.on('clientMessage', (message) => {
-        console.log('clientMessage', message);
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message);
+        //io.emit: emit events to all connected user
+        //socket.emit: emit event to sigle user
+        io.emit('newMessage', {
+            from: message.from, //get data from client-side
+            text: message.text,
+            createdAt: new Date().getTime()
+        });          
     });
     
     socket.on('disconnect', () => {

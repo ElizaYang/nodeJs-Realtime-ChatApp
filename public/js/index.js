@@ -5,17 +5,17 @@ var socket = io();
 socket.on('connect', function () {
     console.log('Connected to server');
     //!!create custom event socket to emit from client side to server(firstArg:name of event, secArg: data(obj))
-    socket.emit('clientMessage', {
-        from: 'client',
-        text: 'hello from client'
-    });
+//    socket.emit('clientMessage', {
+//        from: 'client',
+//        text: 'hello from client'
+//    });
 });
 socket.on('disconnect', function () {
     console.log('Disonnected from server');
 });
-//customized event: 'newEmail', create from server.js:socket.emit('newEmail')
+//customized event: 'newMessage', create from server.js:socket.emit('newMessage')
 socket.on('newMessage', function (message) {
     //pass data from server to client
-    console.log('New Message', message);
+    console.log('newMessage', message);
 });        
   
