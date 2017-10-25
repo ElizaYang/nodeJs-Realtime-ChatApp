@@ -11,18 +11,7 @@
     <p>Welcome to the chat app. My code now can reached by public</p>
 <!--    load io javascript library-->
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-//        call io to ask server open up a web socket to accept connection and keep it open
-        var socket = io();
-//        socket event listener: socket.on
-        socket.on('connect', () => {
-            console.log('Connected to server');
-        });
-        socket.on('disconnect', () => {
-            console.log('Disonnected to server');
-        });
-        
-    </script>
+    <script src="/js/index.js"></script>
 </body>
     
 </html>

@@ -17,9 +17,20 @@ io.on('connection', (socket) => {
 //io listen for a new connection, let client connect and do sth when the connect comes in.
     console.log('New user connected');
     
+    //!!create custom event socket to emit  from server side to client(firstArg:name of event, secArg: data(obj))
+    socket.emit('newMessage', {
+        from:'server',
+        text:'here is emit from server'
+    });
+    
+    //!create custon event for server to listen
+    socket.on('clientMessage', (message) => {
+        console.log('clientMessage', message);
+    });
+    
     socket.on('disconnect', () => {
     //socket listener if user disconnected, do--
-    console.log('User was disconnected');
+        console.log('User was disconnected');
     });
 });
 
