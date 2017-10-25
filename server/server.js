@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
     });
     
     //!create custon event for server to listen
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         //io.emit: emit events to all connected user
         //socket.emit: emit event to sigle user
@@ -36,7 +36,8 @@ io.on('connection', (socket) => {
             from: message.from, //get data from client-side
             text: message.text,
             createdAt: new Date().getTime()
-        });          
+        }); 
+        callback('This is from server');         
     });
     
     socket.on('disconnect', () => {
