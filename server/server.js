@@ -19,10 +19,10 @@ io.on('connection', (socket) => {
     console.log('New user connected');
     
     //!!create newMessage event for socket to emit from server side to client(firstArg:name of event, secArg: data(obj))
-    socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
+    socket.emit('newMessage', generateMessage('Samll Chat', 'Welcome to the chat app'));
     //broadcast to everybody but myself
     socket.broadcast.emit('newMessage', {
-         from: 'Chat App Admin',
+         from: 'Samll Chat',
          text: 'New user just joined',
          createdAt: new Date().getTime()
     });
@@ -37,10 +37,10 @@ io.on('connection', (socket) => {
             text: message.text,
             createdAt: new Date().getTime()
         }); 
-        callback('This is from server');         
+        callback();         
     });
 
-    //set socket listener to receive client data(position obj{})
+    //set socket listener to receive client data(position obj includes url
     socket.on('createLocationMessage', (coords) => {
         io.emit('newLocationMessage', 
             generateLocationMessage('Admin', coords.latitude, coords.longitude));
