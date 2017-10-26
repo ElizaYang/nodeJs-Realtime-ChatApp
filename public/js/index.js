@@ -5,7 +5,7 @@ var socket = io();
 
 //socket event listener: socket.on
 socket.on('connect', function () {
-    console.log('Connected to server');
+	console.log('Connected to server');
     //!!create custom event socket to emit from client side to server(firstArg:name of event, secArg: data(obj))
 //    socket.emit('clientMessage', {
 //        from: 'client',
@@ -14,7 +14,7 @@ socket.on('connect', function () {
 });
 
 socket.on('disconnect', function () {
-    console.log('Disonnected from server');
+	console.log('Disonnected from server');
 });
 
 //customized event: 'newMessage', create from server.js:socket.emit('newMessage')
@@ -54,13 +54,14 @@ jQuery('#message-form').on('submit', function(e) {
 	e.preventDefault();
 	//e is short for event, prevent defualt and
 	//set jQuery'submit'function behavior to below
+	var messageInputBox = jQuery('[name=message]');
 	socket.emit('createMessage', {
 		from: 'User',
 		//use jQuery to restore form data in html
 		//[]select all elements' name == to [name]
-		text: jQuery('[name=message]').val()
+		text: messageInputBox.val()
 	}, function () {
-
+		messageInputBox.val('')
 	});
 });  
 //create selector for send-location button
@@ -72,15 +73,18 @@ locationButton.on('click', function() {
 		return alert('Geolocation not supported by current browser.');
 	}
 
+	locationButton.attr('disabled', 'disabled').text('Sending location...');
+
 	navigator.geolocation.getCurrentPosition(function (position) {
+		locationButton.removeAttr('disabled').text('Send location');
 		//emit location data to server
-	    socket.emit('createLocationMessage', {
-	      latitude: position.coords.latitude,
-	      longitude: position.coords.longitude
-	    });
-  }, function () {
-    alert('Permission denied, unable to fetch location.');
-  });
+		socket.emit('createLocationMessage', {
+			latitude: position.coords.latitude,
+			longitude: position.coords.longitude
+		});
+	}, function () {
+		locationButton.removeAttr('disabled').text('Send location');
+		alert('Permission denied, unable to fetch location.');
+	});
 });
 
-  
